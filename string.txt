@@ -1,0 +1,142 @@
+class STRING
+{
+char str[50];
+public:
+friend istream& operator >>(istream&,STRING&);
+friend ostream& operator <<(ostream&,STRING&);
+friend STRING operator +(STRING,STRING);
+STRING operator =(STRING);
+friend int operator >(STRING,STRING);
+friend int operator ==(STRING,STRING);
+char& operator [](int);
+void operator ()(int x,int y);
+void operator ()(char s[]);
+};
+istream& operator >>(istream& in,STRING &s)
+{
+in>>s.str;
+return in;
+}
+ostream& operator <<(ostream& out,STRING &s)
+{
+out<<s.str;
+return out;
+}
+STRING operator +(STRING s1,STRING s2)
+{
+STRING temp;
+strcpy(temp.str,s1.str);
+strcat(temp.str,s2.str);
+return temp;
+}
+STRING STRING::operator =(STRING s)
+{
+strcpy(str,s.str);
+return *this;
+}
+int operator >(STRING s1,STRING s2)
+{
+if(strcmp(s1.str,s2.str)>0)
+return 1;
+else
+return 0;
+}
+int operator ==(STRING s1,STRING s2)
+{
+if(strcmp(s1.str,s2.str)==0)
+return 1;
+else
+return 0;
+}
+char& STRING::operator[](int index)
+{
+if(index<0 || index>49)
+{
+cout<<"\n Array index is out of bounds";
+exit(0);
+}
+return str[index];
+}
+void STRING::operator ()(int x,int y)
+{
+cout<<"\n Substring=";
+for(int i=x;i<=y;i++)
+cout<<str[i];
+}
+void STRING::operator()(char s[])
+{
+strcat(str,s);
+cout<<"\n Concatenated string="<<str;
+}int main(void)
+{
+STRING s1,s2,s3;
+int ans,index,x,y,choice;
+char st[15],ch;
+while(1)
+{
+cout<<"\n------------------------------";
+cout<<"\n 1.Read \n 2.Overload + \n 3.Overload >";
+cout<<"\n 4.Overload ==\n 5.Overload =\n 6.Overload []\n 7.Overload ()";
+cout<<"\n 8.display \n 9.Exit";
+cout<<"\n------------------------------";
+cout<<"\n Enter your choice:";
+cin>>choice;
+switch(choice)
+{
+case 1:
+cout<<"\n Enter two strings:";
+cin>>s1>>s2;
+cout<<s1<<s2;
+break;
+case 2:
+s3=s1+s2;
+cout<<"\n Concatenated string="<<s3;
+break;
+case 3:
+ans=s1>s2;
+if(ans>0)
+cout<<"\n First string is greater";
+else
+cout<<"\n Second string is greater";
+break;
+case 4:
+ans=(s1==s2);
+if(ans==0)
+cout<<"\n Both strings are equal";
+else
+cout<<"\n Both strings are not equal";
+break;
+case 5:
+s3=s2;
+cout<<"\n Original string="<<s2;
+cout<<"\n Copied string="<<s3;
+break;case 6:
+cout<<"\n Enter index value";
+cin>>index;
+cout<<"\n Character in string1 at specified index="<<s1[index];
+cout<<"\n Enter new character to be substituted";
+cin>>ch;
+s1[index]=ch;
+cout<<"\n Changed string1="<<s1;
+break;
+case 7:
+cout<<"\n Enter index values";
+cin>>x>>y;
+s1(x,y);
+cout<<"\n Enter a string to be concatenated:";
+cin>>st;
+s1(st);
+break;
+case 8:
+cout<<"String 1="<<s1<<endl;
+cout<<"String 2="<<s2<<endl;
+break;
+case 9:
+exit(0);
+default:
+cout<<"\n Invalid choice";
+exit(0);
+}
+}
+return 0;
+}

@@ -1,0 +1,77 @@
+//Run time polymorphism
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+virtual void vfun()
+{
+cout<<"Base class\n";
+}
+};
+class der1:public base
+{
+public:
+void vfun()
+{
+cout<<"Derived 1 Class:\n";
+}
+};
+class der2: public base
+{
+public:
+void vfun()
+{
+cout<<"Derived 2 class\n";
+}
+};
+int main()
+{
+base b;
+der1 d1;
+der2 d2;
+b.vfun();
+d1.vfun();
+d2.vfun();
+return 0;
+}
+#include<iostream>
+using namespace std;
+class Number
+{
+protected:
+int n;
+public:
+void getdata()
+{
+cout<<"\nEnter number: ";
+cin>>n;
+}
+virtual void show()=0;
+};
+class Square: public Number
+{
+public:
+void show()
+{
+cout<<"Square="<<n*n;
+}
+};
+class Cube: public Number
+{
+public:
+void show()
+{
+cout<<"Cube="<<n*n*n<<endl;
+}
+};
+int main()
+{
+Square s;
+Cube c;
+s.getdata();
+s.show();
+c.getdata();
+c.show();
+return 0;
+}

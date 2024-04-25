@@ -1,0 +1,69 @@
+/* Huge Int Program
+n1 = 20 chars
+n2 = 20 chars
+tot= 21 Chars (for carry purpose)
+*/
+#include<iostream>
+#include<cstring>
+#include<iomanip>
+using namespace std;
+#define MAX_SIZE 30
+class HUGEINT
+{
+char number[MAX_SIZE];
+int len;
+public:
+HUGEINT();
+void getnumber();
+void display();
+void add(HUGEINT,HUGEINT);
+};
+HUGEINT::HUGEINT()
+{
+len=MAX_SIZE-1;
+for(int i=0;i<len;i++)
+number[i]='0';
+}
+void HUGEINT:: getnumber()
+{
+char n[MAX_SIZE];
+cout<<"enter no :";
+cin>>n;
+for(int i=strlen(n)-1,j=len-1;i>=0;i--,j--)
+number[j]=n[i];
+number[len]='\0';
+}
+void HUGEINT::display()
+{
+cout<<setw(MAX_SIZE)<<number<<"\tlen=
+"<<len <<endl;
+}
+void HUGEINT::add(HUGEINT H1,HUGEINT H2)
+{
+int i,j,carry=0;
+len=len+1; //last carry purpose
+number[len-1]='0';
+for( i=H1.len-1; i>=0; i--)
+{
+int v=H1.number[i]-'0'+H2.number[i]-
+'0'+carry;
+int rem=v%10;
+carry=v/10;
+number[i+1]=rem+'0';
+}
+number[i+1]=carry+'0';
+number[len]='\0';
+}
+int main()
+{
+HUGEINT H1,H2,H3;
+H1.getnumber();
+H2.getnumber();
+cout<<"first no : ";
+H1.display();
+cout<<"second no : ";
+H2.display();
+H3.add(H1,H2);
+cout<<"total is : ";
+H3.display();
+}

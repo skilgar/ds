@@ -1,0 +1,99 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+struct node
+{
+int data;
+struct node *next;
+};
+typedef struct node node;
+class queue
+{
+public:
+node* create(int x);
+node* enqueue(node *q,int x);
+node* dequeue(node *q);
+void display(node *q);
+};
+node* queue::create(int x)
+{
+node *q;
+q=new node;
+q->data=x;
+q->next=NULL;
+return(q);
+}
+void queue::display(node *q)
+{
+if(q==NULL)
+cout<<"queue is empty\n";
+while(q!=NULL)
+{
+cout<<q->data<<"\t";
+q=q->next;
+}
+}
+node* queue::enqueue(node *q,int x) //IAE
+{
+struct node *temp,*q1;
+temp=create(x);
+q1=q;
+if(q!=NULL)
+{
+while(q->next!=NULL)
+{
+q=q->next;
+}
+q->next=temp;
+return(q1);
+}
+else
+return(temp);
+}
+node* queue::dequeue(node *q) //DAB
+{
+if(q==NULL)
+{
+cout<<"queue is empty\n";
+return NULL;
+}
+cout<<"Deleted element is : "<<q->data;
+q=q->next;
+return(q);
+}
+int main()
+{
+node *q=NULL;
+class queue obj;
+int x,ch;
+while(1)
+{
+cout<<"\n\n----------------\n";
+cout<<"1.enqueue\n2.dequeue\n3.display\n4.exit\n";
+cout<<"Enter your choice : ";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"Enter element to insert : ";
+cin>>x;
+q=obj.enqueue(q,x);
+cout<<"After insertion the elements are : ";
+obj.display(q);
+break;
+case 2:
+q=obj.dequeue(q);
+cout<<"\nAfter deletion the elements are: ";
+obj.display(q);
+break;
+case 3:
+cout<<"The elements are : ";
+obj.display(q);
+break;
+case 4:
+exit(0);
+default:
+cout<<"invalid choice\n";
+}
+}
+}

@@ -1,0 +1,173 @@
+#include<iostream>
+#include<cstdlib> //Exit purpose
+using namespace std;
+class DATE
+{
+int dd,mm,yy;
+public:
+DATE();
+~DATE();
+void getdate();
+void showdate();
+void nextday();
+void prevday();
+void lpyear();
+void lastday();
+friend void compare(DATE d1, DATE d2);
+};
+DATE::DATE()
+{
+dd=mm=yy=0;
+}
+DATE::~DATE()
+{
+cout<<"\nobj is Distroyed\n";
+}
+void DATE:: getdate()
+{
+cout<<"enter Date (dd mm yyyy) :";
+cin>>dd>>mm>>yy;
+}
+void DATE::showdate()
+{
+cout<<"DATE IS : "<<dd<<" - "<<mm<<" -
+"<<yy<<endl;
+}
+void compare(DATE d1, DATE d2)
+{
+if (d1.dd==d2.dd && d1.mm==d2.mm &&
+d1.yy==d2.yy)
+cout<<"both Dates are equal";
+else
+cout<<"both Dates are not equal";
+}
+void DATE::lpyear()
+{
+if(yy%4==0)
+cout<<"\nLeap Year\n";
+else
+cout<<"\n Year is not a Leap Year\n";
+}
+void DATE::nextday()
+{
+if(mm==2 && dd==28)
+{
+if(yy%4==0)
+dd++;
+else
+{
+dd=1; mm++;
+}
+}
+else if(mm==2 && dd==29)
+{
+dd=1; mm++;
+}
+else if(mm==12 && dd==31)
+{
+dd=1;
+mm=1;
+yy++;
+}
+else if(mm==1||mm==3||mm==5||mm==7||mm==8||mm==10)
+{
+if(dd==31)
+{
+dd=1; mm++;
+}
+else
+dd++;
+}
+else
+{
+if(dd==30)
+{
+dd=1; mm++;
+}
+else
+dd++;
+}
+}void DATE::prevday()
+{
+if(mm==3 && dd==1)
+{
+if(yy%4==0)
+{
+dd=29;
+mm--;
+}
+else
+{
+dd=28;
+mm--;
+}
+}
+else if(mm==1 && dd==1)
+{
+dd=31;
+mm=12;
+yy--;
+}
+else if(mm==5||mm==7||mm==8|| mm==10
+||mm==12)
+{
+if(dd==1)
+{
+dd=30;
+mm--;
+}
+else
+dd--;
+}
+else
+{
+if(dd==1)
+{
+dd=31;
+mm--;
+}
+else
+dd--;
+}
+}
+void DATE::lastday()
+{
+if(mm==2 && yy%4==0)
+cout<<"\nLast day=29\n";
+else if(mm==2 && yy%4==1)
+cout<<"\n Last day=28\n";
+else if(mm==4 && mm==6 && mm==9 && mm==11)
+cout<<"\n\nlast day=30";
+else
+cout<<"\nlast day=31";
+}
+main()
+{
+DATE d1,d2;
+int ch;
+do
+{
+cout<<"-----------CHOICE----------";
+cout<<"\n1.Get Date \n2.Display Date\n3.Next day”;
+cout<<”\n4.Previous day\n5.leapyr\n6.Compre dates”;
+cout<<"\n7.LastDay\n8.Exit\n";
+cout<<"Enter your choice:";
+cin>>ch;
+cout<<"---------------------------\n";
+switch(ch)
+{
+case 1:d1.getdate();
+case 2:d1.showdate(); break;
+case 3:d1.nextday(); d1.showdate(); break;
+case 4:d1.prevday(); d1.showdate(); break;
+case 5:d1.lpyear();break;
+case 6:
+cout<<"\n Enter second Date:\n";
+d2.getdate();
+compare(d1,d2);break;
+case 7: d1.lastday(); break;
+case 8:exit(0);
+default: cout<<"INVALID OPTION\n";
+}
+}while(ch<8);
+}

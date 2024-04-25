@@ -1,0 +1,57 @@
+Mul/ple Inheritance
+#include <iostream>
+using namespace std;
+// Base class 1
+class Shape {
+protected:
+double width;
+double height;
+public:
+Shape(double w = 0, double h = 0) {
+width = w;
+height = h;
+}
+void setWidth(double w) {
+width = w;
+}
+void setHeight(double h) {
+height = h;
+}
+double getWidth() const {
+return width;
+}
+double getHeight() const {
+return height;
+}
+};
+// Base class 2
+class Color {
+protected:
+string color;
+public:
+Color(string c = "white") {
+color = c;
+}
+void setColor(string c) {
+color = c;
+}
+string getColor() const {
+return color;
+}
+};
+// Derived class
+class Rectangle : public Shape, public Color {
+public:
+Rectangle(double w = 0, double h = 0, string c = "white") : Shape(w, h), Color(c) {}
+double area() const {
+return getWidth() * getHeight();
+}
+};
+int main() {
+Rectangle rect(5, 4, "blue");
+cout << "Width: " << rect.getWidth() << endl;
+cout << "Height: " << rect.getHeight() << endl;
+cout << "Color: " << rect.getColor() << endl;
+cout << "Area: " << rect.area() << endl;
+return 0;
+}

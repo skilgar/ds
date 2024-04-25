@@ -1,0 +1,408 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+struct node
+{
+int data;
+struct node *pre,*next;
+};
+typedef struct node node;
+class list
+{
+public:
+node* create(int);
+node* creatennodes(int);
+void display(node*);
+void revdisplay(node*);
+int count(node*);
+node* find(node *, int);
+node* IAB(node*,int);
+node* IAE(node*,int);
+node* IAV(node*,int,int);
+node* IAP(node*,int,int);
+node* DAB(node*);
+node* DAE(node*);
+node* DAV(node*,int);
+node* DAP(node*,int);
+node* sort(node*);
+node* reverse(node*);
+node* concate(node*,node*);
+};
+node* list ::create(int val)
+{
+node *temp=new node;
+temp->data=val;
+temp->pre=NULL;
+temp->next=NULL;
+return temp;
+}
+node* list ::creatennodes(int n)
+{
+node *temp,*first,*pre;
+int val,i;
+cout<<"Enter a first node value: ";
+cin>>val;
+first=temp=create(val);
+for(i=2;i<=n;i++)
+{
+cout<<"Enter a next node value: ";
+cin>>val;
+temp->next=create(val);
+temp->next->pre=temp;
+temp=temp->next;
+}
+return first;
+}
+void list ::display(node *first)
+{
+cout<<"\nlist= ";
+while(first!=NULL)
+{
+cout<<first->data<<"\t";
+first=first->next;
+}
+}
+void list ::revdisplay(node *first)
+{
+cout<<"\nReverse list= ";
+while(first->next!=NULL)
+{
+first=first->next;
+}
+while(first!=NULL)
+{
+cout<<first->data<<"\t";
+first=first->pre;
+}
+}
+int list::count(node *first)
+{
+int c=0;
+while(first!=NULL)
+{
+c++;
+first=first->next;
+}
+return c;
+}
+node* list::find(node *first,int ele)
+{
+while(first!=NULL)
+{
+if(first->data==ele)
+break;
+first=first->next;
+}
+return first;
+}
+node* list::IAE(node *first,int ele)
+{
+node *temp=create(ele);
+node *t=first;
+if(first==NULL)
+return temp;
+else
+{
+while(t->next!=NULL)
+t=t->next;
+t->next=temp;
+temp->pre=t;
+}
+return first;
+}
+node* list::IAB(node *first,int ele)
+{
+node *temp=create(ele);
+if(first!=NULL)
+{
+temp->next=first;
+first->pre=temp;
+}
+return temp;
+}
+node* list::IAP(node *first, int ele, int pos)
+{
+node *temp=create(ele);
+node *t=first;
+int i,c=count(first);
+if(pos>c+1 ||pos==0)
+{
+cout<<"IAP not possible";
+return first;
+}
+else if(pos==1)
+{
+first=IAB(first,ele);
+return first;
+}
+else if(pos==c+1)
+{
+first=IAE(first,ele);
+return first;
+}
+else
+{
+for(i=1; i<pos-1;i++)
+t=t->next;
+temp->next=t->next;
+t->next->pre=temp;
+t->next=temp;
+temp->pre=t;
+return first;
+}
+}
+node* list::IAV(node *first, int ele, int val)
+{
+node *temp=create(ele);
+node *t=find(first,val);
+if(t==NULL)
+return NULL;
+else
+{
+temp->next=t->next;
+t->next->pre=temp;
+t->next=temp;
+temp->pre=t;
+}
+return first;
+}
+node* list::DAB(node *first)
+{
+if(first==NULL)
+return NULL;
+if(first->next==NULL) //single node
+return NULL;
+if(first!=NULL)
+{
+first=first->next;
+first->pre=NULL;
+}
+return first;
+}
+node* list::DAE(node *first)
+{
+node *t=first;
+if(t==NULL)
+return NULL;
+if(t->next==NULL)
+return NULL;
+while(t->next!=NULL)
+{
+t=t->next;
+}
+t->pre->next=NULL;
+return first;
+}
+node* list::DAP(node *first, int pos)
+{
+node *t=first;
+int c,i;
+c=count(first);
+if(pos==0||pos>c)
+{
+cout<<"deletion is not
+possible\n";
+return first;
+}
+else if(pos==1)
+{
+first=DAB(first);
+return first;
+}
+else if(c==pos)
+{
+first=DAE(first);
+return first;
+}
+else
+{
+for(i=1;i<pos-1;i++)
+{
+t=t->next;
+}
+t->next=t->next->next;
+t->next->pre=t;
+return first;
+}
+}
+node* list::DAV(node *first, int val)
+{
+node *t=first;
+if(t->data==val)
+{
+t=DAB(t);
+return t;
+}
+while(t!=NULL)
+{
+if(t->data==val)
+break;
+t=t->next;
+}
+if(t==NULL)
+cout<<"given value is not found";
+else if(t->next==NULL) //Last node
+{
+t->pre->next=NULL;
+}
+else
+{
+t->pre->next=t->next;
+t->next->pre=t->pre;
+}
+return first;
+}
+node *list::sort(node *first)
+{
+node *i,*j;
+int t;
+for(i=first;i!=NULL;i=i->next)
+for(j=i->next;j!=NULL;j=j->next)
+if(i->data>j->data)
+{
+t=i->data;
+i->data=j->data;
+j->data=t;
+}
+return first;
+}
+node *list::reverse(node *first)
+{
+node *rev=NULL;
+while(first!=NULL)
+{
+rev=IAB(rev,first->data);
+first=first->next;
+}
+return rev;
+}
+node *list::concate(node *first, node
+*second)
+{
+node *t=first;
+while(t->next!=NULL)
+{
+t=t->next;
+}
+t->next=second;
+second->pre=t;
+return first;
+}
+int main()
+{
+list l;
+int n,ch,ele,c,val,pos;
+node *first,*temp,*second;
+do
+{
+cout<<"\n------------------------------";
+cout<<"\n1.create n nodes\n2.Display\n3.Count\n ";
+cout<<"4.Find\n 5.IAB\n6.IAE\n7.IAV\n8.IAP\n";
+cout<<"9.DAB\n10.DAE\n11.DAV\n12.DAP\n”;
+cout<<”13.sort\n14.reverse\n15.concate”;
+cout<<" \n16.Reverse Display\n17.Exit\n";
+cout<<"------------------------------";
+cout<<"\nEnter your choice:";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"Enter n value: ";
+cin>>n;
+first=l.creatennodes(n);
+l.display(first);
+break;
+case 2:
+l.display(first);
+break;
+case 3:
+c=l.count(first);
+cout<<"total no.of nodes="<<c;
+break;
+case 4:
+cout<<"Enter element to be find: ";
+cin>>ele;
+temp=l.find(first,ele);
+if(temp!=NULL)
+cout<<"Element found";
+else
+cout<<"Element not found";
+break;
+case 5:
+cout<<"Enter element to be IAB:";
+cin>>ele;
+first=l.IAB(first,ele);
+cout<<"After IAB the elements are";
+l.display(first);
+break;
+case 6:
+cout<<"Enter element to be IAE:";
+cin>>ele;
+first=l.IAE(first,ele);
+l.display(first);
+break;
+case 7:
+cout<<"Enter element to be IAV:";
+cin>>ele;
+cout<<"Enter value:";
+cin>>val;
+first=l.IAV(first,ele,val);
+l.display(first);
+break;
+case 8:
+cout<<"Enter element to be IAP:";
+cin>>ele;
+cout<<"Enter pos:";
+cin>>pos;
+first=l.IAP(first,ele,pos);
+l.display(first);
+break;
+case 9:
+first=l.DAB(first);
+l.display(first);
+break;
+case 10:
+first=l.DAE(first);
+l.display(first);
+break;
+case 11:
+cout<<"enter value to be delete:";
+cin>>val;
+first=l.DAV(first,val);
+cout<<"after deleting the elements are:";
+l.display(first);
+break;
+case 12:
+cout<<"enter position to be delete:";
+cin>>pos;
+first=l.DAP(first,pos);
+cout<<"after deleting the elements are:";
+l.display(first);
+break;
+case 13:
+first=l.sort(first);
+cout<<"after sorting the elements are";
+l.display(first);
+break;
+case 14:
+first=l.reverse(first);
+cout<<"after sorting the elements are";
+l.display(first);
+break;
+case 15:
+cout<<"Enter second list n value:";
+cin>>n;
+second=l.creatennodes(n);
+third=l.concate(first,second);
+cout<<"After concatenate the list is:\n";
+l.display(third);
+break;
+case 16:
+l.revdisplay(first);
+break;
+case 17: exit(0);
+default:
+cout<<"Invalid choice";
+}
+}while(ch<17);
+}

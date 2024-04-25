@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+int data;
+struct node *next;
+};
+typedef struct node node;
+class Stack
+{
+public:
+node* create(int x);
+node* push(node *s,int x);
+node* pop(node *s);
+void display(node *s);
+};
+node* Stack::create(int x)
+{
+node *s=new node;
+s->data=x;
+s->next=NULL;
+return (s);
+}
+node* Stack:: push(node *s,int x)
+{
+node *temp;
+temp=create(x);
+temp->next=s;
+return (temp);
+}
+node* Stack:: pop(node *s)
+{
+if(s==NULL)
+cout<<"stack is empty (underflow)\n";
+else
+{
+cout<<" deleted element is : "<<s->data;
+s=s->next;
+}
+return (s);
+}
+void Stack:: display(node *s)
+{
+if(s==NULL)
+cout<<"stack is empty\n";
+else
+{
+cout<<"Elemetns are:\n";
+while(s!=NULL)
+{
+cout<<s->data<<"\t";
+s=s->next;
+}
+}
+}
+int main()
+{
+Stack st;
+int ch,x;
+node *s=NULL;
+while(1)
+{
+cout<<"\n-------------\n";
+cout<<"1.push\n2.pop\n3.display\n4.exit\nenter your choice: ";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"Enter new element : ";
+cin>>x;
+s=st.push(s,x);
+break;
+case 2:
+s=st.pop(s);
+break;
+case 3:
+st.display(s);
+break;
+case 4:
+exit(0);
+default:
+cout<<"invalid choice\n";
+}
+}
+}

@@ -1,0 +1,124 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+class Time
+{
+int hr,min,sec;
+public:
+Time()
+{
+hr=0;
+min=0;
+sec=0;
+}
+~Time()
+{
+cout<<"\n<----Bye Bye--->\n";
+}
+void readtime()
+{
+cin>>hr>>min>>sec;
+}
+void display()
+{
+cout<<hr<<":"<<min<<":"<<sec;
+}
+void increment();
+void decrement();
+friend void compare(Time,Time);
+};
+void compare(Time t1,Time t2)
+{
+long int s1,s2;
+s1=(t1.hr)*3600+(t1.min)*60+t1.sec;
+s2=(t2.hr)*3600+(t2.min)*60+t2.sec;
+if(s1>s2)
+cout<<"\nT1 is larger than Time T2 "<<endl;
+else if(s1<s2)
+cout<<"\nT1 is larger than Time T2 "<<endl;
+else
+cout<<"\nTime T1 and T2 are equal\n";
+}
+void Time::increment()
+{
+sec++;
+if(sec==60)
+{
+min++;
+sec=0;
+}
+if(min==60)
+{
+hr++;
+min=0;
+}
+if(hr==24)
+hr=0;
+}
+void Time::decrement()
+{
+if(hr==0 && min==0 && sec==0)
+{
+hr=23;
+min=59;
+sec=59;
+}
+else if(min==0 && sec==0)
+{
+hr--;
+min=59;
+sec=59;
+}
+else if(sec==0)
+{
+min--;
+sec=59;
+}
+else
+sec--;
+}main()
+{
+Time t1,t2;
+int ch;
+do
+{
+cout<<"\n1.Read Time\n2.Display\n3.Increment by 1sec”;
+cout<<”\n 4.Decrement by 1sec\n5.Compare\n6.Exit\n";
+cout<<"Enter the choice:";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"Enter Time 1 (hh mm ss):";
+t1.readtime();
+cout<<"Enter Time 2 (hh mm ss):";
+t2.readtime();
+break;
+case 2:
+cout<<"\n-------------DISPLAY------------------\n";
+cout<<"Time 1 =";t1.display();
+cout<<"\nTime 2 =";t2.display();
+break;
+case 3:
+cout<<"\nBefore Increment\n";
+cout<<"Time t1 is:"; t1.display();
+t1.increment();
+cout<<"\n\nAfter Increment\n";
+cout<<"Time t1 is:"; t1.display();
+break;
+case 4:
+cout<<"\nBefore Decrement\n";
+cout<<"Time t1 is:"; t1.display();
+t1.decrement();
+cout<<"\n\nAfter Decrement\n";
+cout<<"Time t1 is:"; t1.display();
+break;
+case 5:
+cout<<"Time 1 =";t1.display();
+cout<<"\nTime 2 =";t2.display();
+compare(t1,t2);
+break;
+case 6: exit(0);`
+}
+}while(ch<7);
+}

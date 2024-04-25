@@ -1,0 +1,104 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+class Stack
+{
+int top;
+int stk[100];
+int MAXSIZE;
+public:
+Stack(int size)
+{
+top=-1;
+MAXSIZE=size;
+}
+int isfull();
+int isempty();
+void push(int x);
+int pop();
+void display();};
+int Stack:: isfull()
+{
+if(top==MAXSIZE-1)
+return(1);
+else
+return(0);
+}
+int Stack:: isempty()
+{
+if(top==-1)
+return(1);
+else
+return(0);
+}
+void Stack:: push(int x)
+{
+if(isfull()==1)
+{
+cout<<"stk is full (overflow)\n";
+}
+else
+{
+top++;
+stk[top]=x;
+}
+}
+int Stack:: pop()
+{
+int x=-1;
+if(isempty()==1)
+{
+cout<<"stk is empty (underflow)\n";
+}
+else
+{
+x=stk[top];
+top--;
+}
+return x;
+}
+void Stack:: display()
+{
+int i;
+if(top==-1)
+cout<<"stk is empty";
+else
+{
+cout<<"stack elements are: ";
+for(i=0;i<=top;i++)
+cout<<stk[i]<<"\t";
+}
+}
+int main()
+{
+int ch,x,size;
+cout<<"Enter MAXSIZE of stack: ";
+cin>>size;
+Stack st(size);
+while(1)
+{
+cout<<"\n-------------\n";
+cout<<"1.push\n2.pop\n3.display\n4.exit\nenter your choice: ";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"Enter new element : ";
+cin>>x;
+st.push(x);
+break;
+case 2:
+x=st.pop();
+if(x!=-1)
+cout<<"Deleted element is: "<<x;
+break;
+case 3:
+st.display();
+break;
+case 4:
+exit(0);
+default:
+cout<<"invalid choice\n";
+}
+}
+}
